@@ -8,7 +8,28 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.lajgaard.liarsdicesnyd.MainActivity"
-    android:id="@+id/main_act"
+    android:id="@+id/mainAct"
     android:background="@drawable/luxorcasinotablegamespairdice2">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Game"
+        android:id="@+id/newGame"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_alignLeft="@+id/ruleBot"
+        android:layout_alignRight="@+id/ruleBot"
+        android:height="50dp"
+        android:layout_marginTop="100dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rules of the Game"
+        android:id="@+id/ruleBot"
+        android:height="50dp"
+        android:layout_below="@+id/newGame"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
