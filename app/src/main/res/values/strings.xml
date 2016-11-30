@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">LiarsDice Snyd</string>
+
+    <string-array name="spinner_item">
+        <item>Overall Rules</item>
+        <item>Eyes Counting</item>
+        <item>Bidding</item>
+        <item>The Stair</item>
+
+
+    </string-array>
 </resources>
