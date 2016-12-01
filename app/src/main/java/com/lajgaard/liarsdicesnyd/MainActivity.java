@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,9 +21,17 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) //using intent to change activity
                 {
                     Intent myIntent = new Intent(view.getContext(), rulesActivity.class);
+                    Toast.makeText(getApplicationContext(), "Checking the rules", Toast.LENGTH_LONG).show();
                     startActivity(myIntent);
                 }
             }
         );
+    }
+
+    public void newGame(View view) //the same as the other way of changing activity
+    {
+        Intent myIntent = new Intent(this, playActivity.class);
+        Toast.makeText(getApplicationContext(), "Starting a new game", Toast.LENGTH_LONG).show();
+        startActivity(myIntent);
     }
 }

@@ -21,7 +21,8 @@
         android:layout_alignLeft="@+id/ruleBot"
         android:layout_alignRight="@+id/ruleBot"
         android:height="50dp"
-        android:layout_marginTop="100dp" />
+        android:layout_marginTop="100dp"
+        android:onClick="newGame"/>/>
 
     <Button
         android:layout_width="wrap_content"
