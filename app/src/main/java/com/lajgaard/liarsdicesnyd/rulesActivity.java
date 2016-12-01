@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class rulesActivity extends AppCompatActivity {
@@ -21,19 +22,24 @@ public class rulesActivity extends AppCompatActivity {
         spinneruse.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                TextView myText = (TextView) findViewById(R.id.ruleText);
                 switch (position) {
                     case 0 :
                         //adding toast in each spinner item. You can use any code here
-                        Toast.makeText(getApplicationContext(), "Over all rules selected", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Overall rules selected", Toast.LENGTH_LONG).show();
+                        myText.setText(R.string.overAllRules);
                         break;
                     case 1 :
                         Toast.makeText(getApplicationContext(), "How to count eyes selected", Toast.LENGTH_LONG).show();
+                        myText.setText(R.string.eyeCounting);
                         break;
                     case 2 :
-                        Toast.makeText(getApplicationContext(), "How the bids works", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "How the stair works selected", Toast.LENGTH_LONG).show();
+                        myText.setText(R.string.theStairRule);
                         break;
                     case 3 :
-                        Toast.makeText(getApplicationContext(), "How the stair works selected", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "How the bids works", Toast.LENGTH_LONG).show();
+                        myText.setText(R.string.biddingRule);
                         break;
                     default:
 

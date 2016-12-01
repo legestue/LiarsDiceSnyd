@@ -1,12 +1,16 @@
 <resources>
     <string name="app_name">LiarsDice Snyd</string>
+    <string name="overAllRules">The rules in the game are simple, you must roll your dice in the beginning of the game, and after a completed challenge. A challenge is against all the players, and when someone does not believe in the bid the cup is lifted. </string>
+    <string name="eyeCounting">The dices eyes tells what your gambles should be at, for example if you have three fours and two fives you have three fours your selves and should gamble at that. The ones are wildcards or jokers which means in you have two threes, a one and two fives, the one can count both as a five or three, but the other players can also use them as wildcards. </string>
+    <string name="theStairRule">The stair is also a way of counting eyes, the easiest way to understand it, is by thinking of a histogram and a stair, which means if you have three dices it is a one two and three that makes a stair. The wildcard count is therefore 4, if only there are one dice left and you have a one, you also have a stair that counts for two wildcards. </string>
+    <string name="biddingRule">The way the bid is by guessing how many of one kind there is, if there will be four players with five dices the total is twenty dices, the first player might say eight threes. The next person has to go above that, and that can be done in two ways taking higher number on the dice, such as four, so player two can say eight fours but not eight twos. Or a higher counter as nine twos but it is nok allowed to say seven fours.</string>
 
     <string-array name="spinner_item">
         <item>Overall Rules</item>
         <item>Eyes Counting</item>
-        <item>Bidding</item>
         <item>The Stair</item>
-
+        <item>Bidding</item>
 
     </string-array>
+
 </resources>
