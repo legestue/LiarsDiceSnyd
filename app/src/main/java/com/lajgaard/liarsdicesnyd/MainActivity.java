@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void newGame(View view) //the same as the other way of changing activity
     {
-        Intent myIntent = new Intent(this, playActivity.class);
-        Toast.makeText(getApplicationContext(), "Starting a new game", Toast.LENGTH_LONG).show();
+        Intent myIntent = new Intent(this, setupActivity.class);
+        Toast.makeText(getApplicationContext(), "Ready to setup players", Toast.LENGTH_LONG).show();
         startActivity(myIntent);
     }
 }
