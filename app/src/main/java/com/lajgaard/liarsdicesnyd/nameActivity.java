@@ -6,18 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-public class setupActivity extends AppCompatActivity {
+public class nameActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setup);
+        setContentView(R.layout.activity_name);
     }
 
-    public void chosePlayer(View view) //the same as the other way of changing activity
+    public void playGame(View view) //the same as the other way of changing activity
     {
-        Intent myIntent = new Intent(this, nameActivity.class);
-        Toast.makeText(getApplicationContext(), "Choosing the name of the players", Toast.LENGTH_LONG).show();
+        Intent myIntent = new Intent(this, playActivity.class);
+        Toast.makeText(getApplicationContext(), "Starting the game", Toast.LENGTH_LONG).show();
         startActivity(myIntent);
     }
 

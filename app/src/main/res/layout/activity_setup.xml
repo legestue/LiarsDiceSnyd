@@ -24,10 +24,10 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Start Game"
-        android:id="@+id/startButton"
+        android:text="Chose players"
+        android:id="@+id/playerButton"
         android:layout_marginLeft="45dp"
-        android:onClick="playGame"
+        android:onClick="chosePlayer"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
