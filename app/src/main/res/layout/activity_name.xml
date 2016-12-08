@@ -32,5 +32,192 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="75dp"
+        android:id="@+id/scrollPlayers" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="350dp">
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 1"
+                android:id="@+id/player1"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name1"
+                android:ems="10"
+                android:id="@+id/playerEditText1"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player1"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 2"
+                android:id="@+id/player2"
+                android:layout_below="@+id/playerEditText1"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name2"
+                android:ems="10"
+                android:id="@+id/playerEditText2"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player2"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 3"
+                android:id="@+id/player3"
+                android:layout_below="@+id/playerEditText2"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name3"
+                android:ems="10"
+                android:id="@+id/playerEditText3"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player3"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 4"
+                android:id="@+id/player4"
+                android:layout_below="@+id/playerEditText3"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name4"
+                android:ems="10"
+                android:id="@+id/playerEditText4"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player4"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 5"
+                android:id="@+id/player5"
+                android:layout_below="@+id/playerEditText4"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name5"
+                android:ems="10"
+                android:id="@+id/playerEditText5"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player5"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+            <TextView
+                android:layout_width="115dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player 6"
+                android:id="@+id/player6"
+                android:layout_below="@+id/playerEditText5"
+                android:layout_marginTop="15dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textColor="#ffdd00" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:visibility="invisible"
+                android:text="Name6"
+                android:ems="10"
+                android:id="@+id/playerEditText6"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/player6"
+                android:layout_centerHorizontal="true"
+                android:layout_column="9"
+                android:textColor="#ffdd00"
+                android:backgroundTint="#ffdd00" />
+
+        </RelativeLayout>
+    </ScrollView>
 
 </RelativeLayout>

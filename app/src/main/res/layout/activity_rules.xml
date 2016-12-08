@@ -33,7 +33,7 @@
         android:background="@color/button_material_light" />
 
     <ScrollView
-        android:id="@+id/ScrollView01"
+        android:id="@+id/scrollRules"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
         android:layout_height="130dp"

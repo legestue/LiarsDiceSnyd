@@ -15,8 +15,101 @@
         android:layout_height="wrap_content"
         android:text="Exit Game"
         android:id="@+id/exitGameBot"
+        android:onClick="exitGame"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bid"
+        android:id="@+id/bidButton"
+        android:layout_alignTop="@+id/exitGameBot"
         android:layout_centerHorizontal="true"
-        android:onClick="exitGame"/>
+        android:onClick="newBid" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lift"
+        android:id="@+id/liftButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="liftCup" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:id="@+id/layoutPlay1"
+        android:layout_marginBottom="250dp">
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice1"
+            android:background="@drawable/dice1"
+            android:layout_alignBottom="@+id/dice2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice2"
+            android:background="@drawable/dice2"
+            android:layout_alignTop="@+id/dice3"
+            android:layout_alignLeft="@+id/dice5"
+            android:layout_alignStart="@+id/dice5" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice3"
+            android:background="@drawable/dice3"
+            android:layout_marginTop="33dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice4"
+            android:background="@drawable/dice4"
+            android:layout_alignTop="@+id/dice5"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice5"
+            android:background="@drawable/dice5"
+            android:layout_alignTop="@+id/dice6"
+            android:layout_centerHorizontal="true" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:id="@+id/dice6"
+            android:background="@drawable/dice6"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+
 
 </RelativeLayout>
