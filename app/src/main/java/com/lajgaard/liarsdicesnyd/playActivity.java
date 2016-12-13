@@ -23,6 +23,7 @@ public class playActivity extends AppCompatActivity {
     private SensorManager SM;
     private MediaPlayer player;
 
+    static int looser = 0;
     int[][] playerdice = new int[setupActivity.playerNumber][setupActivity.diceNumber];
     Random rnd = new Random();
     int[] diceNumberLeft = new int[setupActivity.playerNumber];
@@ -72,14 +73,14 @@ public class playActivity extends AppCompatActivity {
         TextView playerID = (TextView)findViewById(R.id.playerID);
         playerID.setText("Turn: " + nameActivity.playerString[turn]);
 
-     /*   //Create our Sensor Manager
+        //Create our Sensor Manager
         SM = (SensorManager)getSystemService(SENSOR_SERVICE);
 
         //Accelerometer Sensor
         mySensor = SM.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         //Register sensor listener
-        SM.registerListener(this, mySensor, SensorManager.SENSOR_DELAY_NORMAL);*/
+        SM.registerListener(SMListener, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         //Setting the player to play a specific sound
         player = MediaPlayer.create(this, R.raw.freedicerollsoundeffect);
@@ -88,15 +89,6 @@ public class playActivity extends AppCompatActivity {
             for (int n = 0; n < setupActivity.diceNumber; n++){
                 playerdice[i][n] = 0;
             }
-        }
-    }
-
-    public void updateDice(){
-        for (int i = 0; i < setupActivity.diceNumber; i++){
-            imageDice[i].setVisibility(View.INVISIBLE);
-        }
-        for (int i = 0; i < diceNumberLeft[turn]; i++){
-            imageDice[i].setVisibility(View.VISIBLE);
         }
     }
 
@@ -112,28 +104,72 @@ public class playActivity extends AppCompatActivity {
     }
 
     public void confirmBid(View view){
-        bid = true;
-        diceNum = rollerDice.getValue();
-        diceSize = rollerNumber.getValue();
 
         TextView lastBidText = (TextView)findViewById(R.id.lastBidText);
         lastBidText.setVisibility(View.VISIBLE);
-        lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
-
-        if (turn == setupActivity.playerNumber - 1) turn = 0;
-        else turn++;
-
         TextView playerID = (TextView)findViewById(R.id.playerID);
-        playerID.setText("Turn: " + nameActivity.playerString[turn]);
 
-        rollerDice.setVisibility(View.INVISIBLE);
-        rollerNumber.setVisibility(View.INVISIBLE);
-        confirmBid.setVisibility(View.INVISIBLE);
+        if (diceNum < rollerDice.getValue()){
+            if (diceSize <= rollerNumber.getValue()){
+                bid = true;
+                diceNum = rollerDice.getValue();
+                diceSize = rollerNumber.getValue();
 
+                lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
+
+                if (turn == setupActivity.playerNumber - 1) turn = 0;
+                else{
+                    do{
+                        turn++;
+                    }while(diceNumberLeft[turn] == 0);
+                }
+
+                playerID.setText("Turn: " + nameActivity.playerString[turn]);
+
+                rollerDice.setVisibility(View.INVISIBLE);
+                rollerNumber.setVisibility(View.INVISIBLE);
+                confirmBid.setVisibility(View.INVISIBLE);
+
+                updateDice();
+                changePicture();
+            } else {
+                Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
+            }
+
+        } else if (diceNum >= rollerDice.getValue()) {
+            if (diceSize < rollerNumber.getValue()){
+                bid = true;
+                diceNum = rollerDice.getValue();
+                diceSize = rollerNumber.getValue();
+
+                lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
+
+                if (turn == setupActivity.playerNumber - 1) turn = 0;
+                else {
+                    do {
+                        turn++;
+                    } while (diceNumberLeft[turn] == 0);
+                }
+
+                playerID.setText("Turn: " + nameActivity.playerString[turn]);
+
+                rollerDice.setVisibility(View.INVISIBLE);
+                rollerNumber.setVisibility(View.INVISIBLE);
+                confirmBid.setVisibility(View.INVISIBLE);
+
+                updateDice();
+                changePicture();
+            } else {
+                Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void liftCup(View view) //the same as the other way of changing activity
     {
+        TextView playerID = (TextView)findViewById(R.id.playerID);
         if (bid){
             int sum = 0;
             Toast.makeText(getApplicationContext(), "You didn't believe the earlier player", Toast.LENGTH_LONG).show();
@@ -147,36 +183,63 @@ public class playActivity extends AppCompatActivity {
             if (sum < diceSize){
                 Toast.makeText(getApplicationContext(), "The dices are below the chosen the bid", Toast.LENGTH_LONG).show();
 
+                for (int i = 0; i < setupActivity.playerNumber; i++){
+                    rollFlag[i] = 0;
+                    if (turn == 0){
+                        if (i != setupActivity.playerNumber - 1){
+                            if (diceNumberLeft[i] != 0) {diceNumberLeft[i]--;}}}
+                    else if (i != turn - 1)
+                        if (diceNumberLeft[i] != 0) diceNumberLeft[i]--;
+                }
+                if (turn == 0) turn = setupActivity.playerNumber - 1;
+                else turn--;
+                playerID.setText("Turn: " + nameActivity.playerString[turn]);
 
             } else {
                 Toast.makeText(getApplicationContext(), "The dices are equal or above the chosen the bid", Toast.LENGTH_LONG).show();
+
+                for (int i = 0; i < setupActivity.playerNumber; i++){
+                    rollFlag[i] = 0;
+                        if (i != turn){
+                            if (diceNumberLeft[i] != 0) {diceNumberLeft[i]--;}}
+
+                }
             }
+
+            int playerLeft = 0;
+            for (int i = 0; i < setupActivity.playerNumber; i++){
+                if (diceNumberLeft[i] != 0) playerLeft++;
+                looser = i;
+            }
+
+            if (playerLeft == 1) endGame(null);
+
+            diceNum = 0;
+            diceSize = 0;
+            updateDice();
+            changePicture();
+
+            TextView lastBidText = (TextView)findViewById(R.id.lastBidText);
+            lastBidText.setVisibility(View.INVISIBLE);
+
         } else Toast.makeText(getApplicationContext(), "A bid has to happen", Toast.LENGTH_LONG).show();
 
     }
 
-    public void exitGame(View view) //the same as the other way of changing activity
-    {
-        Intent myIntent = new Intent(this, MainActivity.class);
-        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_LONG).show();
-        startActivity(myIntent);
-    }
+    private final SensorEventListener SMListener = new SensorEventListener() {
+        public void onSensorChanged(SensorEvent event) {
 
-    /*@Override
-    public void onSensorChanged(SensorEvent event) {
-
-        if (rollFlag[turn] == 0) {
-            if (event.values[0] > 15 || event.values[1] > 15 || event.values[2] > 15){ //checks both x, y and z values
-                Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_LONG).show();
-                giveRndValues();
+            if (event.values[0] > 15 || event.values[1] > 15 || event.values[2] > 15) { //checks both x, y and z values
+                if (rollFlag[turn] == 0) {
+                    giveRndValues(null);
+                }
             }
-        } else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_LONG).show();
-    }
+        }
 
-    @Override
-    public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        //Not used
-    }*/
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            //Not used
+        }
+    };
 
     public void giveRndValues(View view){
 
@@ -191,6 +254,15 @@ public class playActivity extends AppCompatActivity {
             rollFlag[turn] = 1;
         }
         else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_LONG).show();
+    }
+
+    public void updateDice(){
+        for (int i = 0; i < setupActivity.diceNumber; i++){
+            imageDice[i].setVisibility(View.INVISIBLE);
+        }
+        for (int i = 0; i < diceNumberLeft[turn]; i++){
+            imageDice[i].setVisibility(View.VISIBLE);
+        }
     }
 
     public void changePicture (){
@@ -218,10 +290,30 @@ public class playActivity extends AppCompatActivity {
         }
     }
 
+    public void endGame(View view) //the same as the other way of changing activity
+    {
+        Intent myIntent = new Intent(this, endActivity.class);
+        Toast.makeText(getApplicationContext(), "There is a looser", Toast.LENGTH_LONG).show();
+        startActivity(myIntent);
+    }
+
+    public void exitGame(View view) //the same as the other way of changing activity
+    {
+        Intent myIntent = new Intent(this, MainActivity.class);
+        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_LONG).show();
+        startActivity(myIntent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SM.registerListener(SMListener, mySensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
+
     @Override
     protected void onPause() {
-        super.onPause();
-
+        SM.unregisterListener(SMListener);
         player.release();
+        super.onPause();
     }
 }

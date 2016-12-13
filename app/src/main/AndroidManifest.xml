@@ -18,7 +18,8 @@
         <activity android:name=".rulesActivity" />
         <activity android:name=".playActivity" />
         <activity android:name=".setupActivity" />
-        <activity android:name=".nameActivity"></activity>
+        <activity android:name=".nameActivity" />
+        <activity android:name=".endActivity"></activity>
     </application>
 
 </manifest>
