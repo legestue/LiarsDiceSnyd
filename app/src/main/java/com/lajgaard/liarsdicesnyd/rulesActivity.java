@@ -26,19 +26,19 @@ public class rulesActivity extends AppCompatActivity {
                 switch (position) {
                     case 0 :
                         //adding toast in each spinner item. You can use any code here
-                        Toast.makeText(getApplicationContext(), "Overall rules selected", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Overall rules selected", Toast.LENGTH_SHORT).show();
                         myText.setText(R.string.overAllRules);
                         break;
                     case 1 :
-                        Toast.makeText(getApplicationContext(), "How to count eyes selected", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "How to count eyes selected", Toast.LENGTH_SHORT).show();
                         myText.setText(R.string.eyeCounting);
                         break;
                     case 2 :
-                        Toast.makeText(getApplicationContext(), "How the stair works selected", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "How the stair works selected", Toast.LENGTH_SHORT).show();
                         myText.setText(R.string.theStairRule);
                         break;
                     case 3 :
-                        Toast.makeText(getApplicationContext(), "How the bids works", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "How the bids works", Toast.LENGTH_SHORT).show();
                         myText.setText(R.string.biddingRule);
                         break;
                     default:

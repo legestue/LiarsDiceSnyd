@@ -31,15 +31,15 @@ public class setupActivity extends AppCompatActivity {
 
         if (playerNumber > 6){
             Intent myIntent = new Intent(this, setupActivity.class);
-            Toast.makeText(getApplicationContext(), "The maximum players are 6", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "The maximum players are 6", Toast.LENGTH_SHORT).show();
             startActivity(myIntent);
         } else  if (diceNumber > 6) {
             Intent myIntent = new Intent(this, setupActivity.class);
-            Toast.makeText(getApplicationContext(), "The maximum dices are 6", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "The maximum dices are 6", Toast.LENGTH_SHORT).show();
             startActivity(myIntent);
         } else {
             Intent myIntent = new Intent(this, nameActivity.class);
-            Toast.makeText(getApplicationContext(), "Chose players", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Chose players", Toast.LENGTH_SHORT).show();
             startActivity(myIntent);
         }
 
@@ -48,7 +48,7 @@ public class setupActivity extends AppCompatActivity {
     public void exitGame(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, MainActivity.class);
-        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 }

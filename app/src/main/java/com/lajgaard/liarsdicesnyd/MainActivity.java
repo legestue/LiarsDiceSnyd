@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View view) //using intent to change activity
                 {
                     Intent myIntent = new Intent(view.getContext(), rulesActivity.class);
-                    Toast.makeText(getApplicationContext(), "Checking the rules", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Checking the rules", Toast.LENGTH_SHORT).show();
                     startActivity(myIntent);
                 }
             }
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public void newGame(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, setupActivity.class);
-        Toast.makeText(getApplicationContext(), "Ready to setup players", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Ready to setup players", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 }

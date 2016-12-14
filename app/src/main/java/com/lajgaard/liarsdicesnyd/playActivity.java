@@ -95,11 +95,11 @@ public class playActivity extends AppCompatActivity {
     public void newBid(View view) //the same as the other way of changing activity
     {
         if (rollFlag[turn] == 1){
-            Toast.makeText(getApplicationContext(), "A new bet will be placed", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "A new bet will be placed", Toast.LENGTH_SHORT).show();
             rollerDice.setVisibility(View.VISIBLE);
             rollerNumber.setVisibility(View.VISIBLE);
             confirmBid.setVisibility(View.VISIBLE);
-        } else Toast.makeText(getApplicationContext(), "A role has not happen", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(getApplicationContext(), "A role has not happen", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -115,25 +115,12 @@ public class playActivity extends AppCompatActivity {
                 diceNum = rollerDice.getValue();
                 diceSize = rollerNumber.getValue();
 
-                lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
-
-                if (turn == setupActivity.playerNumber - 1) turn = 0;
-                else{
-                    do{
-                        turn++;
-                    }while(diceNumberLeft[turn] == 0);
-                }
-
-                playerID.setText("Turn: " + nameActivity.playerString[turn]);
-
                 rollerDice.setVisibility(View.INVISIBLE);
                 rollerNumber.setVisibility(View.INVISIBLE);
                 confirmBid.setVisibility(View.INVISIBLE);
 
-                updateDice();
-                changePicture();
             } else {
-                Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_SHORT).show();
             }
 
         } else if (diceNum >= rollerDice.getValue()) {
@@ -142,29 +129,26 @@ public class playActivity extends AppCompatActivity {
                 diceNum = rollerDice.getValue();
                 diceSize = rollerNumber.getValue();
 
-                lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
-
-                if (turn == setupActivity.playerNumber - 1) turn = 0;
-                else {
-                    do {
-                        turn++;
-                    } while (diceNumberLeft[turn] == 0);
-                }
-
-                playerID.setText("Turn: " + nameActivity.playerString[turn]);
-
                 rollerDice.setVisibility(View.INVISIBLE);
                 rollerNumber.setVisibility(View.INVISIBLE);
                 confirmBid.setVisibility(View.INVISIBLE);
-
-                updateDice();
-                changePicture();
-            } else {
-                Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_SHORT).show();
         }
+
+        lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
+
+        do {
+            if (turn == setupActivity.playerNumber - 1) turn = 0;
+            else {
+                turn++;
+            }
+        } while(diceNumberLeft[turn] == 0);
+
+        playerID.setText("Turn: " + nameActivity.playerString[turn]);
+        updateDice();
+        changePicture();
     }
 
     public void liftCup(View view) //the same as the other way of changing activity
@@ -172,16 +156,57 @@ public class playActivity extends AppCompatActivity {
         TextView playerID = (TextView)findViewById(R.id.playerID);
         if (bid){
             int sum = 0;
-            Toast.makeText(getApplicationContext(), "You didn't believe the earlier player", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "You didn't believe the earlier player", Toast.LENGTH_SHORT).show();
+
+            int storeTurn = turn;
+            for (int i = 0; i < setupActivity.playerNumber; i++) {
+                if (rollFlag[i] == 0){
+                    Toast.makeText(getApplicationContext(), "A players is given random dices", Toast.LENGTH_SHORT).show();
+                    turn = i;
+                    giveRndValues(null);
+                }
+            }
+            turn = storeTurn;
+
+            //Counting the dices and checks for stairs and ones
             for (int i = 0; i < setupActivity.playerNumber; i++){
+                int stairCount = 0;
+                int stairNumber = 0;
+                //The Stair check mechanism
                 for (int n = 0; n < diceNumberLeft[i]; n++){
-                    if (playerdice[i][n] == 1) sum++;
+                    stairNumber = stairNumber + n + 1;
+                    switch (playerdice[i][n]){
+                        case 1:
+                            stairCount = stairCount + 1;
+                            break;
+                        case 2:
+                            stairCount = stairCount + 2;
+                            break;
+                        case 3:
+                            stairCount = stairCount + 3;
+                            break;
+                        case 4:
+                            stairCount = stairCount + 4;
+                            break;
+                        case 5:
+                            stairCount = stairCount + 5;
+                            break;
+                        default:
+                            stairCount = stairCount + 6;
+                            break;
+                    }
+
+                }
+                //The dice counter
+                for (int n = 0; n < diceNumberLeft[i]; n++){
+                    if (stairCount == stairNumber) sum = diceNumberLeft[i] + 1;
+                    else if (playerdice[i][n] == 1) sum++;
                     else if (playerdice[i][n] == diceNum) sum++;
                 }
             }
-
+            //Checking who is right or wrong
             if (sum < diceSize){
-                Toast.makeText(getApplicationContext(), "The dices are below the chosen the bid", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "The dices are below the chosen the bid", Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < setupActivity.playerNumber; i++){
                     rollFlag[i] = 0;
@@ -196,7 +221,7 @@ public class playActivity extends AppCompatActivity {
                 playerID.setText("Turn: " + nameActivity.playerString[turn]);
 
             } else {
-                Toast.makeText(getApplicationContext(), "The dices are equal or above the chosen the bid", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "The dices are equal or above the chosen the bid", Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i < setupActivity.playerNumber; i++){
                     rollFlag[i] = 0;
@@ -205,15 +230,14 @@ public class playActivity extends AppCompatActivity {
 
                 }
             }
-
+            //Looking how many players left go to another activity if only one
             int playerLeft = 0;
             for (int i = 0; i < setupActivity.playerNumber; i++){
                 if (diceNumberLeft[i] != 0) playerLeft++;
-                looser = i;
+                if (diceNumberLeft[i] != 0) looser = i;
             }
-
             if (playerLeft == 1) endGame(null);
-
+            //Updating dices picture and number of them left and putting the rollers to zero
             diceNum = 0;
             diceSize = 0;
             updateDice();
@@ -222,7 +246,7 @@ public class playActivity extends AppCompatActivity {
             TextView lastBidText = (TextView)findViewById(R.id.lastBidText);
             lastBidText.setVisibility(View.INVISIBLE);
 
-        } else Toast.makeText(getApplicationContext(), "A bid has to happen", Toast.LENGTH_LONG).show();
+        } else Toast.makeText(getApplicationContext(), "A bid has to happen", Toast.LENGTH_SHORT).show();
 
     }
 
@@ -245,15 +269,15 @@ public class playActivity extends AppCompatActivity {
 
         if (rollFlag[turn] == 0) {
             player.start();
-            Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < diceNumberLeft[turn]; i++) {
                 playerdice[turn][i] = rnd.nextInt(5) + 1;
             }
-            changePicture();
             updateDice();
+            changePicture();
             rollFlag[turn] = 1;
         }
-        else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_LONG).show();
+        else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_SHORT).show();
     }
 
     public void updateDice(){
@@ -293,14 +317,14 @@ public class playActivity extends AppCompatActivity {
     public void endGame(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, endActivity.class);
-        Toast.makeText(getApplicationContext(), "There is a looser", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "There is a looser", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 
     public void exitGame(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, MainActivity.class);
-        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 

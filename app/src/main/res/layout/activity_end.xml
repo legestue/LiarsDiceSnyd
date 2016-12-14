@@ -15,24 +15,20 @@
         android:layout_height="wrap_content"
         android:text="New Game"
         android:id="@+id/gameBot"
+        android:onClick="toSetup"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginStart="55dp"
-        android:onClick="toSetup"/>
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Exit Game"
         android:id="@+id/exitBot"
+        android:onClick="toMain"
+        android:layout_alignTop="@+id/gameBot"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="55dp"
-        android:layout_marginEnd="55dp"
-        android:onClick="toMain"/>
+        android:layout_alignParentEnd="true"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -44,4 +40,14 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="116dp"
         android:textColor="#b9fff200"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Play Again"
+        android:id="@+id/newPlayBot"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="toPlay"/>
 </RelativeLayout>

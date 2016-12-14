@@ -49,14 +49,14 @@ public class nameActivity extends AppCompatActivity {
         }
 
         Intent myIntent = new Intent(this, playActivity.class);
-        Toast.makeText(getApplicationContext(), "Starting the game", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Starting the game", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 
     public void exitGame(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, MainActivity.class);
-        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Going back to the main window", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 }

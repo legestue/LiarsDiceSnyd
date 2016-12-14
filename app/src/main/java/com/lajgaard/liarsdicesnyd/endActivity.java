@@ -21,14 +21,21 @@ public class endActivity extends AppCompatActivity {
     public void toMain (View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, MainActivity.class);
-        Toast.makeText(getApplicationContext(), "There is a looser", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Going back to Main", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 
     public void toSetup(View view) //the same as the other way of changing activity
     {
         Intent myIntent = new Intent(this, setupActivity.class);
-        Toast.makeText(getApplicationContext(), "There is a looser", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "Starting new game with new setup", Toast.LENGTH_SHORT).show();
+        startActivity(myIntent);
+    }
+
+    public void toPlay(View view) //the same as the other way of changing activity
+    {
+        Intent myIntent = new Intent(this, playActivity.class);
+        Toast.makeText(getApplicationContext(), "Starting new game with same setup", Toast.LENGTH_SHORT).show();
         startActivity(myIntent);
     }
 }
