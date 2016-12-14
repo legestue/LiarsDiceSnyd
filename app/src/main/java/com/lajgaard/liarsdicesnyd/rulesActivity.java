@@ -23,6 +23,7 @@ public class rulesActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 TextView myText = (TextView) findViewById(R.id.ruleText);
+                //using the spinner to select between the rules that you want to read by placing a already written string into it
                 switch (position) {
                     case 0 :
                         //adding toast in each spinner item. You can use any code here

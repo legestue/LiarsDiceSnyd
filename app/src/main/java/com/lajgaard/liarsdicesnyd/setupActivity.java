@@ -17,10 +17,9 @@ public class setupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup);
 
-
-
     }
 
+    //the EditText is used to give a number that are stored for the number of players and dices
     public void chosePlayer(View view) //the same as the other way of changing activity
     {
         playNumField = (EditText) findViewById(R.id.playerNumField);
@@ -30,13 +29,9 @@ public class setupActivity extends AppCompatActivity {
         diceNumber = Integer.valueOf(diceNumField.getText().toString());
 
         if (playerNumber > 6){
-            Intent myIntent = new Intent(this, setupActivity.class);
             Toast.makeText(getApplicationContext(), "The maximum players are 6", Toast.LENGTH_SHORT).show();
-            startActivity(myIntent);
         } else  if (diceNumber > 6) {
-            Intent myIntent = new Intent(this, setupActivity.class);
             Toast.makeText(getApplicationContext(), "The maximum dices are 6", Toast.LENGTH_SHORT).show();
-            startActivity(myIntent);
         } else {
             Intent myIntent = new Intent(this, nameActivity.class);
             Toast.makeText(getApplicationContext(), "Chose players", Toast.LENGTH_SHORT).show();

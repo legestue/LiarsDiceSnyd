@@ -29,6 +29,7 @@ public class playActivity extends AppCompatActivity {
     int[] diceNumberLeft = new int[setupActivity.playerNumber];
     int turn, diceNum, diceSize;
     int[] rollFlag = new int [setupActivity.playerNumber];
+    int[] stairFlag = new int[setupActivity.playerNumber];
     ImageView[] imageDice = new ImageView[6];
     NumberPicker rollerDice, rollerNumber;
     Button confirmBid;
@@ -40,8 +41,10 @@ public class playActivity extends AppCompatActivity {
         setContentView(R.layout.activity_play);
         turn = 0;
 
+        //gives all the players on of flag and setting the dices
         for (int i = 0; i < setupActivity.playerNumber; i++) {
             rollFlag[i] = 0;
+            stairFlag[i] = 0;
             diceNumberLeft[i] = setupActivity.diceNumber;
             for (int n = 0; n < setupActivity.diceNumber; n++){
                 playerdice[i][n] = 1;
@@ -85,6 +88,7 @@ public class playActivity extends AppCompatActivity {
         //Setting the player to play a specific sound
         player = MediaPlayer.create(this, R.raw.freedicerollsoundeffect);
 
+        //gives all the dices the value of zero
         for (int i = 0; i < setupActivity.playerNumber; i++){
             for (int n = 0; n < setupActivity.diceNumber; n++){
                 playerdice[i][n] = 0;
@@ -92,7 +96,76 @@ public class playActivity extends AppCompatActivity {
         }
     }
 
-    public void newBid(View view) //the same as the other way of changing activity
+    //Looking at the sensor event
+    private final SensorEventListener SMListener = new SensorEventListener() {
+        public void onSensorChanged(SensorEvent event) {
+
+            if (event.values[0] > 15 || event.values[1] > 15 || event.values[2] > 15) { //checks both x, y and z values
+                if (rollFlag[turn] == 0) {
+                    giveRndValues(null);
+                }
+            }
+        }
+
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+            //Not used
+        }
+    };
+
+    //Giving the player (turn) random values if there has been a role
+    public void giveRndValues(View view){
+
+        if (rollFlag[turn] == 0) {
+            player.start();
+            Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_SHORT).show();
+            for (int i = 0; i < diceNumberLeft[turn]; i++) {
+                playerdice[turn][i] = rnd.nextInt(5) + 1;
+            }
+            updateDice();
+            changePicture();
+            rollFlag[turn] = 1;
+        }
+        else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_SHORT).show();
+    }
+
+    //setting all the pictures invisible and afterwards sets the pictures left for the player visable
+    public void updateDice(){
+        for (int i = 0; i < setupActivity.diceNumber; i++){
+            imageDice[i].setVisibility(View.INVISIBLE);
+        }
+        for (int i = 0; i < diceNumberLeft[turn]; i++){
+            imageDice[i].setVisibility(View.VISIBLE);
+        }
+    }
+
+    //Changing the picture for the different dices
+    public void changePicture (){
+        for (int i = 0; i < diceNumberLeft[turn]; i++) {
+            switch (playerdice[turn][i]) {
+                case 1:
+                    imageDice[i].setBackgroundResource(R.drawable.dice1);
+                    break;
+                case 2:
+                    imageDice[i].setBackgroundResource(R.drawable.dice2);
+                    break;
+                case 3:
+                    imageDice[i].setBackgroundResource(R.drawable.dice3);
+                    break;
+                case 4:
+                    imageDice[i].setBackgroundResource(R.drawable.dice4);
+                    break;
+                case 5:
+                    imageDice[i].setBackgroundResource(R.drawable.dice5);
+                    break;
+                default:
+                    imageDice[i].setBackgroundResource(R.drawable.dice6);
+                    break;
+            }
+        }
+    }
+
+    //if the player has been shaking the rollers shows and the confirm button as well
+    public void newBid(View view)
     {
         if (rollFlag[turn] == 1){
             Toast.makeText(getApplicationContext(), "A new bet will be placed", Toast.LENGTH_SHORT).show();
@@ -103,12 +176,13 @@ public class playActivity extends AppCompatActivity {
 
     }
 
-    public void confirmBid(View view){
-
+    //The bid has to be confirmed and the function checks the bid is valid
+    public void confirmBid(){
         TextView lastBidText = (TextView)findViewById(R.id.lastBidText);
         lastBidText.setVisibility(View.VISIBLE);
         TextView playerID = (TextView)findViewById(R.id.playerID);
 
+        //if the eyes of the dices are greater than before the number of dices has to be greater or equal than before
         if (diceNum < rollerDice.getValue()){
             if (diceSize <= rollerNumber.getValue()){
                 bid = true;
@@ -123,6 +197,7 @@ public class playActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_SHORT).show();
             }
 
+            //if the eyes of the dices are less or equal than before the number of dices has to be greater than before
         } else if (diceNum >= rollerDice.getValue()) {
             if (diceSize < rollerNumber.getValue()){
                 bid = true;
@@ -137,8 +212,10 @@ public class playActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Cannot put that bid", Toast.LENGTH_SHORT).show();
         }
 
+        //showing the bid
         lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
 
+        //tests if there only are one player left then ends the game
         do {
             if (turn == setupActivity.playerNumber - 1) turn = 0;
             else {
@@ -146,18 +223,21 @@ public class playActivity extends AppCompatActivity {
             }
         } while(diceNumberLeft[turn] == 0);
 
+        //switching which players turn it is in the string
         playerID.setText("Turn: " + nameActivity.playerString[turn]);
         updateDice();
         changePicture();
     }
 
-    public void liftCup(View view) //the same as the other way of changing activity
+    //If a player lifts the cup then the dices must be counted
+    public void liftCup()
     {
         TextView playerID = (TextView)findViewById(R.id.playerID);
         if (bid){
             int sum = 0;
             Toast.makeText(getApplicationContext(), "You didn't believe the earlier player", Toast.LENGTH_SHORT).show();
 
+            //if not all players have shaken the it will be done for them
             int storeTurn = turn;
             for (int i = 0; i < setupActivity.playerNumber; i++) {
                 if (rollFlag[i] == 0){
@@ -168,46 +248,25 @@ public class playActivity extends AppCompatActivity {
             }
             turn = storeTurn;
 
+            stairCheck();
+
             //Counting the dices and checks for stairs and ones
             for (int i = 0; i < setupActivity.playerNumber; i++){
-                int stairCount = 0;
-                int stairNumber = 0;
-                //The Stair check mechanism
-                for (int n = 0; n < diceNumberLeft[i]; n++){
-                    stairNumber = stairNumber + n + 1;
-                    switch (playerdice[i][n]){
-                        case 1:
-                            stairCount = stairCount + 1;
-                            break;
-                        case 2:
-                            stairCount = stairCount + 2;
-                            break;
-                        case 3:
-                            stairCount = stairCount + 3;
-                            break;
-                        case 4:
-                            stairCount = stairCount + 4;
-                            break;
-                        case 5:
-                            stairCount = stairCount + 5;
-                            break;
-                        default:
-                            stairCount = stairCount + 6;
-                            break;
-                    }
-
-                }
                 //The dice counter
-                for (int n = 0; n < diceNumberLeft[i]; n++){
-                    if (stairCount == stairNumber) sum = diceNumberLeft[i] + 1;
-                    else if (playerdice[i][n] == 1) sum++;
-                    else if (playerdice[i][n] == diceNum) sum++;
+                if (stairFlag[i] == 1) sum = sum + diceNumberLeft[i] + 1;
+                else {
+                    for (int n = 0; n < diceNumberLeft[i]; n++) {
+                        if (playerdice[i][n] == 1) sum++;
+                        else if (playerdice[i][n] == diceNum) sum++;
+                    }
                 }
             }
+
             //Checking who is right or wrong
             if (sum < diceSize){
                 Toast.makeText(getApplicationContext(), "The dices are below the chosen the bid", Toast.LENGTH_SHORT).show();
 
+                //setting the roll flags to zero and subtracts one dice for all the other players than the one with the bid
                 for (int i = 0; i < setupActivity.playerNumber; i++){
                     rollFlag[i] = 0;
                     if (turn == 0){
@@ -220,6 +279,7 @@ public class playActivity extends AppCompatActivity {
                 else turn--;
                 playerID.setText("Turn: " + nameActivity.playerString[turn]);
 
+                //setting the roll flags to zero and subtracts one dics for all the other players than the one that lifted
             } else {
                 Toast.makeText(getApplicationContext(), "The dices are equal or above the chosen the bid", Toast.LENGTH_SHORT).show();
 
@@ -250,66 +310,26 @@ public class playActivity extends AppCompatActivity {
 
     }
 
-    private final SensorEventListener SMListener = new SensorEventListener() {
-        public void onSensorChanged(SensorEvent event) {
+    //The Stair check mechanism
+    public void stairCheck() {
+        for (int i = 0; i < setupActivity.playerNumber; i++) {
+            int stairOK = 1;
 
-            if (event.values[0] > 15 || event.values[1] > 15 || event.values[2] > 15) { //checks both x, y and z values
-                if (rollFlag[turn] == 0) {
-                    giveRndValues(null);
+            //Checking for numbers (ones, twos etc
+            for (int n = 1; n < diceNumberLeft[i] + 1; n++) {
+                int diceOK = 0;
+                //Checking all the dice
+                for (int nn = 0; nn < diceNumberLeft[i]; nn++) {
+                    if (playerdice[i][nn] == n) {
+                        diceOK = 1;
+                    }
                 }
+                //If number not found stairOK = 0
+                if (diceOK == 0) stairOK = 0;
             }
-        }
-
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-            //Not used
-        }
-    };
-
-    public void giveRndValues(View view){
-
-        if (rollFlag[turn] == 0) {
-            player.start();
-            Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_SHORT).show();
-            for (int i = 0; i < diceNumberLeft[turn]; i++) {
-                playerdice[turn][i] = rnd.nextInt(5) + 1;
-            }
-            updateDice();
-            changePicture();
-            rollFlag[turn] = 1;
-        }
-        else Toast.makeText(getApplicationContext(), "You can only roll once", Toast.LENGTH_SHORT).show();
-    }
-
-    public void updateDice(){
-        for (int i = 0; i < setupActivity.diceNumber; i++){
-            imageDice[i].setVisibility(View.INVISIBLE);
-        }
-        for (int i = 0; i < diceNumberLeft[turn]; i++){
-            imageDice[i].setVisibility(View.VISIBLE);
-        }
-    }
-
-    public void changePicture (){
-        for (int i = 0; i < diceNumberLeft[turn]; i++) {
-            switch (playerdice[turn][i]) {
-                case 1:
-                    imageDice[i].setBackgroundResource(R.drawable.dice1);
-                    break;
-                case 2:
-                    imageDice[i].setBackgroundResource(R.drawable.dice2);
-                    break;
-                case 3:
-                    imageDice[i].setBackgroundResource(R.drawable.dice3);
-                    break;
-                case 4:
-                    imageDice[i].setBackgroundResource(R.drawable.dice4);
-                    break;
-                case 5:
-                    imageDice[i].setBackgroundResource(R.drawable.dice5);
-                    break;
-                default:
-                    imageDice[i].setBackgroundResource(R.drawable.dice6);
-                    break;
+            //If there is a stair the stair count increases
+            if (stairOK == 1) {
+                stairFlag[i] = 1;
             }
         }
     }

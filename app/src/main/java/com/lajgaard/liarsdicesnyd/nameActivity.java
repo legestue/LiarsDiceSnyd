@@ -44,6 +44,7 @@ public class nameActivity extends AppCompatActivity {
 
     public void playGame(View view) //the same as the other way of changing activity
     {
+        //storing the names of the players in static string array
         for (int i = 0; i < 6; i++){
             playerString[i] = playerEditText[i].getText().toString();
         }
