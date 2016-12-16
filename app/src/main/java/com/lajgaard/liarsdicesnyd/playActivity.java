@@ -40,6 +40,8 @@ public class playActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
         turn = 0;
+        diceNum = 0;
+        diceSize = 0;
 
         //gives all the players on of flag and setting the dices
         for (int i = 0; i < setupActivity.playerNumber; i++) {
@@ -119,7 +121,7 @@ public class playActivity extends AppCompatActivity {
             player.start();
             Toast.makeText(getApplicationContext(), "Shaking dices", Toast.LENGTH_SHORT).show();
             for (int i = 0; i < diceNumberLeft[turn]; i++) {
-                playerdice[turn][i] = rnd.nextInt(5) + 1;
+                playerdice[turn][i] = rnd.nextInt(6) + 1;
             }
             updateDice();
             changePicture();
@@ -177,7 +179,7 @@ public class playActivity extends AppCompatActivity {
     }
 
     //The bid has to be confirmed and the function checks the bid is valid
-    public void confirmBid(){
+    public void confirmBid(View view){
         TextView lastBidText = (TextView)findViewById(R.id.lastBidText);
         lastBidText.setVisibility(View.VISIBLE);
         TextView playerID = (TextView)findViewById(R.id.playerID);
@@ -188,6 +190,14 @@ public class playActivity extends AppCompatActivity {
                 bid = true;
                 diceNum = rollerDice.getValue();
                 diceSize = rollerNumber.getValue();
+
+                //tests if there players who is finish
+                do {
+                    if (turn == setupActivity.playerNumber - 1) turn = 0;
+                    else {
+                        turn++;
+                    }
+                } while(diceNumberLeft[turn] == 0);
 
                 rollerDice.setVisibility(View.INVISIBLE);
                 rollerNumber.setVisibility(View.INVISIBLE);
@@ -204,6 +214,14 @@ public class playActivity extends AppCompatActivity {
                 diceNum = rollerDice.getValue();
                 diceSize = rollerNumber.getValue();
 
+                //tests if there players who is finish
+                do {
+                    if (turn == setupActivity.playerNumber - 1) turn = 0;
+                    else {
+                        turn++;
+                    }
+                } while(diceNumberLeft[turn] == 0);
+
                 rollerDice.setVisibility(View.INVISIBLE);
                 rollerNumber.setVisibility(View.INVISIBLE);
                 confirmBid.setVisibility(View.INVISIBLE);
@@ -215,14 +233,6 @@ public class playActivity extends AppCompatActivity {
         //showing the bid
         lastBidText.setText("Last bid = Dice: " + diceNum + ", Number of Dices: " + diceSize);
 
-        //tests if there only are one player left then ends the game
-        do {
-            if (turn == setupActivity.playerNumber - 1) turn = 0;
-            else {
-                turn++;
-            }
-        } while(diceNumberLeft[turn] == 0);
-
         //switching which players turn it is in the string
         playerID.setText("Turn: " + nameActivity.playerString[turn]);
         updateDice();
@@ -230,7 +240,7 @@ public class playActivity extends AppCompatActivity {
     }
 
     //If a player lifts the cup then the dices must be counted
-    public void liftCup()
+    public void liftCup(View view)
     {
         TextView playerID = (TextView)findViewById(R.id.playerID);
         if (bid){
